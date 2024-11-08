@@ -2,6 +2,8 @@ package com.canwia.BankExchange.dto.requests;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class CreateExchangeRequest {
 
@@ -11,5 +13,5 @@ public class CreateExchangeRequest {
 
     private String currency_code;
 
-    private float amount;
+    private BigDecimal amount;
 }

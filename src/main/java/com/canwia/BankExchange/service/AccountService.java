@@ -5,13 +5,16 @@ import com.canwia.BankExchange.dto.converter.AccountDtoConverter;
 import com.canwia.BankExchange.dto.requests.CreateAccountRequest;
 import com.canwia.BankExchange.model.Account;
 import com.canwia.BankExchange.repository.AccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class AccountService {
 
@@ -37,10 +40,14 @@ public class AccountService {
         return accountDtoConverter.convertFrom(account);
     }
 
-    protected Optional<Account> findAccountById(String AccountId) {
-        return accountRepository.findById(UUID.fromString(AccountId));
+    protected Optional<Account> findAccountById(UUID accountId) {
+        Optional<Account> account = accountRepository.findById(accountId);
+        return account;
     }
 
 
-
+    protected void updateAccount(Account account, BigDecimal newBalance) {
+        account.setBalance(newBalance);
+        accountRepository.save(account);
+    }
 }

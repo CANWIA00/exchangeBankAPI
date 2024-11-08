@@ -15,7 +15,7 @@ public class ExchangeController {
     public ExchangeController(ExchangeService exchangeService) {
         this.exchangeService = exchangeService;
     }
-/*
+
 
     //Buying Process foreign money
     @PostMapping
@@ -24,5 +24,5 @@ public class ExchangeController {
 
     return ResponseEntity.ok("Exchange request has been created");
     }
-*/
+
 }

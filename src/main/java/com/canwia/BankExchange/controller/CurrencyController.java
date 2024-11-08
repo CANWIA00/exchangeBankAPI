@@ -32,9 +32,9 @@ public class CurrencyController {
     }
 
 
-    @GetMapping("/currencyyy/table/{id}")
-    public TableData[] getAllTablesById1(@PathVariable String id) {
-        return null;
+    @GetMapping("/currency/id/{id}")
+    public  ResponseEntity<CurrencyDto> getAllTablesById1(@PathVariable String id) {
+        return ResponseEntity.ok(currencyService.getCurrencyById(id));
     }
 
 }
