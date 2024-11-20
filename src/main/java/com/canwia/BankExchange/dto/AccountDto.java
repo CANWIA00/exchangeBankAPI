@@ -14,7 +14,7 @@ public class AccountDto {
 
     private UUID id;
 
-    private UUID customerId;
+    private UUID userId;
 
     private String currency;
 

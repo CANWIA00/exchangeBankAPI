@@ -13,7 +13,7 @@ public class AccountDtoConverter {
     public AccountDto convertFrom(Account account){
         return new AccountDto(
                 account.getId(),
-                account.getCustomerId(),
+                account.getUserId(),
                 account.getCurrency(),
                 account.getCurrencyCode(),
                 account.getBalance(),

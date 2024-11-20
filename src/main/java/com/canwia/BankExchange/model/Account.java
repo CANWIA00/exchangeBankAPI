@@ -10,11 +10,12 @@ import java.util.UUID;
 
 
 @Entity
+@Table(name = "Accounts")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+
 public class Account {
 
     @Id
@@ -22,7 +23,7 @@ public class Account {
     private UUID id;
 
     //************* Implement Customer
-    private UUID customerId;
+    private UUID userId;
 
     private String currency;
 
@@ -36,5 +37,8 @@ public class Account {
     private Set<Exchange> exchanges;
 
 
-
+    @Override
+    public String toString() {
+        return "Account [id=" + id + ", userId=" + userId + ", currency=" + currency + ", currencyCode=" + currencyCode + ", balance="+ balance + ", createdAt=" + createdAt + "]";
+    }
 }

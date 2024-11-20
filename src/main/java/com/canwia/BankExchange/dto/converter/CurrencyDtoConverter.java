@@ -16,7 +16,7 @@ public class CurrencyDtoConverter {
         currencyDto.setCode(currency.getCode());
         currencyDto.setBuy(currency.getBuy());
         currencyDto.setSell(currency.getSell());
-        currencyDto.setMid(currency.getMid());
+        currencyDto.setDate(currency.getDate());
         return currencyDto;
     }
 

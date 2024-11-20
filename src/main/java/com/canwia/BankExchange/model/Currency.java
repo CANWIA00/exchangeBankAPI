@@ -1,8 +1,7 @@
 package com.canwia.BankExchange.model;
 
 import lombok.*;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +14,6 @@ public class Currency {
     private String name;
     private float buy;
     private float sell;
-    private float mid;
+    private String date;
 
 }

@@ -119,7 +119,7 @@ public class ExchangeService {
                 ()-> System.out.println("Account not found!")
         );
 
-        exchange.setCurrencyCode(createExchangeRequest.getCurrency_code());
+        exchange.setToAccountId(UUID.fromString(createExchangeRequest.getTo_account_id()));
         exchange.setAmount(createExchangeRequest.getAmount());
         exchange.setExchangeDate(LocalDateTime.now());
         exchange.setAccount(from_AccountOptional.get());

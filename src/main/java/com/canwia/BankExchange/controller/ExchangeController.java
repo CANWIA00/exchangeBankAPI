@@ -17,11 +17,10 @@ public class ExchangeController {
     }
 
 
-    //Buying Process foreign money
+    //Buying Process foreign money TODO
     @PostMapping
     public ResponseEntity<String> createExchange(@RequestBody CreateExchangeRequest createExchangeRequest) {
         exchangeService.createExchange(createExchangeRequest);
-
     return ResponseEntity.ok("Exchange request has been created");
     }
 

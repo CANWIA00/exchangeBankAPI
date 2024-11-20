@@ -6,9 +6,6 @@ import lombok.Data;
 @Data
 public class CreateAccountRequest {
 
-    private String currency;
-
-    private String currencySymbol;
-
+    private String currencyCode;
 
 }
