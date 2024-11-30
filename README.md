@@ -1,3 +1,9 @@
+###
+
+<h1 align="left">🛠️ Still under the developing process... 🛠️</h1>
+
+###
+
 <h1 align="center">Exchange Bank API</h1>
 
 ###
@@ -35,6 +41,31 @@
 
 ###
 
-<h1 align="left">Still under the developing process</h1>
+<h2 align="center"> Dedvelopment </h3>
 
 ###
+
+<h5 align="left"> Data Objects:</h5>
+
+###
+
+![Database Schema](https://github.com/CANWIA00/)
+
+###
+
+<h5 align="left">Business Logic Schema: </h5>
+
+###
+
+![Business Logic Schema](https://github.com/CANWIA00)
+
+###
+
+<h5 align="left"> Exchange Service / RabbitMQ Scenario:</h5>
+
+###
+
+
+![Exchange Service](https://github.com/CANWIA00)
+
+
