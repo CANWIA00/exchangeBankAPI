@@ -24,7 +24,14 @@
 
 ###
 
-<p align="left">Programming Language: Java 21<br>Framework: Spring Boot<br>Database: MySQL with JPA<br>HTTP Client: RestTemplate for consuming external APIs<br>JSON Parsing: Jackson dependency<br>Messaging Queue: RabbitMQ for error management and notifications<br>Security: JWT Authorization and Spring Security<br>Currency Rates API: Narodowy Bank Polski API (NBP API)</p>
+- Programming Language: Java 21
+- Framework: Spring Boot
+- Database: MySQL with JPA
+- HTTP Client: RestTemplate for consuming external APIs
+- JSON Parsing: Jackson dependency
+- Messaging Queue: RabbitMQ for error management and notifications
+- Security: JWT Authorization and Spring Security
+- Currency Rates API: Narodowy Bank Polski API (NBP API)
 
 ###
 
