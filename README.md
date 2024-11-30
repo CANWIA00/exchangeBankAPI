@@ -10,13 +10,13 @@
 
 ###
 
-<p align="left"> 
+
 - Account Management: Create and manage personalized accounts.
 - Real-Time Currency Exchange: Get live exchange rates from the NBP API for accurate currency conversions.
 - Secure Operations: Includes JWT-based authentication and Spring Security for robust data protection.
 - Error Handling and Notifications: RabbitMQ is utilized for managing errors and sending customer notifications.
 - Database Operations: MySQL with JPA provides seamless and efficient data handling.
-</p>
+
 
 ###
 
