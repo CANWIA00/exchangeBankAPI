@@ -5,11 +5,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class CreateExchangeRequest {
+public class BuyExchangeRequest {
 
-    private String from_account_id;
+    private String plnAccount_id;
 
-    private String to_account_id;
+    private String otherAccount_id;
 
     private String currency_code;
 

@@ -1,9 +1,13 @@
 package com.canwia.BankExchange.service;
 
-import com.canwia.BankExchange.dto.requests.CreateExchangeRequest;
+
+import com.canwia.BankExchange.dto.converter.ExchangeDtoConverter;
+import com.canwia.BankExchange.dto.requests.BuyExchangeRequest;
+
 import com.canwia.BankExchange.model.Account;
 import com.canwia.BankExchange.model.Currency;
 import com.canwia.BankExchange.model.Exchange;
+import com.canwia.BankExchange.model.Operation;
 import com.canwia.BankExchange.repository.ExchangeRepository;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.DirectExchange;
@@ -27,6 +31,7 @@ public class ExchangeService {
     private final AmqpTemplate rabbitTemplate;
     private final DirectExchange directExchange;
     private final CurrencyService currencyService;
+    private final ExchangeDtoConverter exchangeDtoConverter;
 
 
     @Value("${sample.rabbitmq.routingKey}")
@@ -35,17 +40,18 @@ public class ExchangeService {
     @Value("${sample.rabbitmq.queue}")
     String queueName;
 
-    public ExchangeService(ExchangeRepository exchangeRepository, AccountService accountService, AmqpTemplate rabbitTemplate, DirectExchange directExchange, CurrencyService currencyService) {
+    public ExchangeService(ExchangeRepository exchangeRepository, AccountService accountService, AmqpTemplate rabbitTemplate, DirectExchange directExchange, CurrencyService currencyService, ExchangeDtoConverter exchangeDtoConverter) {
         this.exchangeRepository = exchangeRepository;
         this.accountService = accountService;
         this.rabbitTemplate = rabbitTemplate;
         this.directExchange = directExchange;
         this.currencyService = currencyService;
+        this.exchangeDtoConverter = exchangeDtoConverter;
     }
 
     //Directly, send to the rabbitMQ our request and our first step gonna read our message then all the process gonna start.
-    public void createExchange(CreateExchangeRequest createExchangeRequest) {
-        rabbitTemplate.convertAndSend(directExchange.getName(), routingKey, createExchangeRequest);
+    public void createExchange(BuyExchangeRequest buyExchangeRequest) {
+        rabbitTemplate.convertAndSend(directExchange.getName(), routingKey, buyExchangeRequest);
     }
 
     //*** First-Step ***
@@ -54,17 +60,17 @@ public class ExchangeService {
     // Compare if is there enough money in from_Account
     // Send it to the second_queue
     @RabbitListener(queues = "${sample.rabbitmq.queue}")
-    public void fromAccountProcess_Exchange(CreateExchangeRequest createExchangeRequest) {
-
-        Optional<Account> accountOptional = accountService.findAccountById(UUID.fromString(createExchangeRequest.getFrom_account_id()));
-        Optional<Currency> currency = Optional.ofNullable(currencyService.findCurrencyById(createExchangeRequest.getCurrency_code()));
-        BigDecimal neededAmount = calculateNeededAmountForExchange(createExchangeRequest.getAmount(), createExchangeRequest.getCurrency_code());
+    public void fromAccountProcess_Exchange(BuyExchangeRequest buyExchangeRequest) {
+        //TODO Section
+        Optional<Account> accountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getPlnAccount_id()));
+        Optional<Currency> currency = Optional.ofNullable(currencyService.findCurrencyById(buyExchangeRequest.getCurrency_code()));
+        BigDecimal neededAmount = calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code());
 
 
         if (accountOptional.isPresent() && currency.isPresent()) {
             if(ifEnoughAmount(neededAmount,accountOptional.get().getBalance())){
                 subtractFromAccount(neededAmount,accountOptional.get());
-                rabbitTemplate.convertAndSend(directExchange.getName(), "secondRoute", createExchangeRequest);
+                rabbitTemplate.convertAndSend(directExchange.getName(), "secondRoute", buyExchangeRequest);
             }else {
                 System.out.println("Internal exception - (fromAccountProcess_BuyExchange); Not enough balance or invalid currency! " + accountOptional.get().getId());
             }
@@ -82,17 +88,17 @@ public class ExchangeService {
     // if not; charge money back to the sender account
     // Send it to the third_queue
     @RabbitListener(queues = "secondStepQueue")
-    public void toAccountProcess_Exchange(CreateExchangeRequest createExchangeRequest) {
-        Optional<Account> accountOptional = accountService.findAccountById(UUID.fromString(createExchangeRequest.getTo_account_id()));
+    public void toAccountProcess_Exchange(BuyExchangeRequest buyExchangeRequest) {
+        Optional<Account> accountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getOtherAccount_id()));
 
         accountOptional.ifPresentOrElse( account -> {
-            addToAccount(createExchangeRequest.getAmount(), account);
-            rabbitTemplate.convertAndSend(directExchange.getName(), "thirdRoute", createExchangeRequest);
-            },
+                    addToAccount(buyExchangeRequest.getAmount(), account);
+                    rabbitTemplate.convertAndSend(directExchange.getName(), "thirdRoute", buyExchangeRequest);
+                },
                 ()->{
                     System.out.println("Internal exception - (toAccountProcess_BuyExchange); Not enough balance! " + accountOptional.get().getId());
-                    Optional<Account> from_accountOptional = accountService.findAccountById(UUID.fromString(createExchangeRequest.getFrom_account_id()));
-                    BigDecimal neededAmount = calculateNeededAmountForExchange(createExchangeRequest.getAmount(), createExchangeRequest.getCurrency_code());
+                    Optional<Account> from_accountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getPlnAccount_id()));
+                    BigDecimal neededAmount = calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code());
                     addToAccount(neededAmount, from_accountOptional.get());
                 }
 
@@ -103,28 +109,36 @@ public class ExchangeService {
     // save exchange to exchange repo
     // finalize transfer and make the notification
     @RabbitListener(queues = "thirdStepQueue")
-    public void finalizeExchange(CreateExchangeRequest createExchangeRequest) {
-        Optional<Account> from_AccountOptional = accountService.findAccountById(UUID.fromString(createExchangeRequest.getFrom_account_id()));
-        Optional<Account> to_AccountOptional = accountService.findAccountById(UUID.fromString(createExchangeRequest.getTo_account_id()));
+    public void finalizeExchange(BuyExchangeRequest buyExchangeRequest) {
+        Optional<Account> pln_AccountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getPlnAccount_id()));
+        Optional<Account> other_AccountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getOtherAccount_id()));
         Exchange exchange = new Exchange();
 
-        from_AccountOptional.ifPresentOrElse(account -> {
-            System.out.println("From Account: " + account.getId()+ " new account balance: " + account.getBalance());
-        },
+        pln_AccountOptional.ifPresentOrElse(account -> {
+                    System.out.println("From Account: " + account.getId()+ " new account balance: " + account.getBalance());
+                },
                 ()-> System.out.println("Account not found!")
         );
-        to_AccountOptional.ifPresentOrElse(account -> {
+        other_AccountOptional.ifPresentOrElse(account -> {
                     System.out.println("From Account: " + account.getId()+ " new account balance: " + account.getBalance());
                 },
                 ()-> System.out.println("Account not found!")
         );
 
-        exchange.setToAccountId(UUID.fromString(createExchangeRequest.getTo_account_id()));
-        exchange.setAmount(createExchangeRequest.getAmount());
+        //TODO exchange model
+        exchange.setSourceAccount(pln_AccountOptional.get());
+        exchange.setTargetAccount(other_AccountOptional.get());
+        exchange.setOperation(Operation.BUY);
+        exchange.setExchangeRate(null); //TODO getCurrencyRate()
+        exchange.setPlnAmount(calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code()));
+        exchange.setOtherCurrencyAmount(buyExchangeRequest.getAmount());
+        exchange.setTransactionFee(BigDecimal.ZERO);
         exchange.setExchangeDate(LocalDateTime.now());
-        exchange.setAccount(from_AccountOptional.get());
+        exchange.setStatus("SUCCESS");
+        exchange.setErrorMessage(null);
 
         exchangeRepository.save(exchange);
+
 
     }
 
@@ -138,10 +152,10 @@ public class ExchangeService {
 
 
 
-    protected BigDecimal calculateNeededAmountForExchange(BigDecimal buyAmount, String currencyCode) {
+    protected BigDecimal calculateNeededAmountForExchangeBuy(BigDecimal amount, String currencyCode) {
 
         BigDecimal currencyRate = BigDecimal.valueOf(currencyService.findCurrencyById(currencyCode).getBuy());
-        return buyAmount.multiply(currencyRate);
+        return amount.multiply(currencyRate);
     }
 
     protected boolean ifEnoughAmount(BigDecimal neededAmount, BigDecimal requestAmount) {
