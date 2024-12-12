@@ -35,12 +35,9 @@ public class Account {
     // The time when the account was created
     private LocalDateTime createdAt;
 
-    // A collection of exchanges related to this account
-    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Exchange> sourceExchanges; // Exchanges where this account is the source (PLN Account)
 
-    @OneToMany(mappedBy = "targetAccount", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Exchange> targetExchanges; // Exchanges where this account is the target (Other currency account)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Exchange> exchanges;
 
     @Override
     public String toString() {

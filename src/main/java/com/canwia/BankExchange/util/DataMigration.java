@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
+/*
 @Component
 public class DataMigration  implements CommandLineRunner{
 
@@ -39,6 +39,7 @@ public class DataMigration  implements CommandLineRunner{
         account2.setCreatedAt(LocalDateTime.now());
 
 
+
         accountRepository.save(account);
         accountRepository.save(account2);
     }
@@ -59,4 +60,4 @@ public class DataMigration  implements CommandLineRunner{
         list.forEach(System.out::println);
 
     }
-}
+}*/

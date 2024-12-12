@@ -15,21 +15,23 @@ public class ExchangeDto {
 
     private String id;
     //Account id which is bought currency
-    private String from_account_id;
+    private String pln_account_id;
     //Account id which is used for buying/selling process
-    private String to_account_id;
+    private String other_account_id;
 
-    private float fromAmount;
+    private float plnAmount;
 
-    private String fromCurrency;
+    private String plnCurrency;
 
-    private float toAmount;
+    private float otherAmount;
 
-    private String toCurrency;
+    private String otherCurrency;
 
-
+    private String operation;
 
     private float currencyRate;
+
+    private BigDecimal transactionFee;
 
     private LocalDateTime exchangeDate;
 }

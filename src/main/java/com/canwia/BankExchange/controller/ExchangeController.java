@@ -16,6 +16,7 @@ public class ExchangeController {
     private final ExchangeService exchangeService;
 
     public ExchangeController(ExchangeService exchangeService) {
+
         this.exchangeService = exchangeService;
     }
 
@@ -32,19 +33,19 @@ public class ExchangeController {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<ExchangeDto>> getAllExchangeByUserId(@PathVariable String id) {
        return ResponseEntity.ok(exchangeService.getAllExchangeByUserId(id));
-    }*/
+    }
+    */
 
-    /*
     //Exchange history for account id
     @GetMapping("/account/{id}")
     public ResponseEntity<List<ExchangeDto>> getExchangeByAccountId(@PathVariable String id) {
         return ResponseEntity.ok(exchangeService.getAllExchangeByAccountId(id));
     }
-
+    //Exchange
     @GetMapping("/{id}")
     public ResponseEntity<ExchangeDto> getExchangeById(@PathVariable String id) {
         return ResponseEntity.ok(exchangeService.getExchangeById(id));
     }
 
-     */
+
 }

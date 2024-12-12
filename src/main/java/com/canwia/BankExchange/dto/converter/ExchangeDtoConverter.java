@@ -15,10 +15,19 @@ public class ExchangeDtoConverter {
     public ExchangeDto convertFrom(Exchange exchange){
 
         ExchangeDto exchangeDto = new ExchangeDto();
+        exchangeDto.setId(String.valueOf(exchange.getId()));
+        exchangeDto.setPln_account_id(String.valueOf(exchange.getPlnAccountId()));
+        exchangeDto.setOther_account_id(String.valueOf(exchange.getAccount().getId()));
+        exchangeDto.setPlnAmount((exchange.getPlnAmount().floatValue()));
+        exchangeDto.setOtherAmount(exchange.getOtherCurrencyAmount().floatValue());
+        exchangeDto.setPlnCurrency(exchange.getPlnCurrency());
+        exchangeDto.setOtherCurrency(exchange.getOtherCurrency());
+        exchangeDto.setOperation(exchange.getOperation().toString());
+        exchangeDto.setCurrencyRate(exchange.getExchangeRate().floatValue());
+        exchangeDto.setTransactionFee(exchange.getTransactionFee());
+        exchangeDto.setExchangeDate(exchange.getExchangeDate());
 
-
-
-        return new ExchangeDto();
+        return exchangeDto;
     }
 
 

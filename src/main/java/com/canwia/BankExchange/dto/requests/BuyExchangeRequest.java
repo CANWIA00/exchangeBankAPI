@@ -14,4 +14,6 @@ public class BuyExchangeRequest {
     private String currency_code;
 
     private BigDecimal amount;
+
+
 }

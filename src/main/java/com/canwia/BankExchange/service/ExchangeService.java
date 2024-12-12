@@ -1,14 +1,17 @@
 package com.canwia.BankExchange.service;
 
 
+import com.canwia.BankExchange.dto.ExchangeDto;
 import com.canwia.BankExchange.dto.converter.ExchangeDtoConverter;
 import com.canwia.BankExchange.dto.requests.BuyExchangeRequest;
 
+import com.canwia.BankExchange.exception.CustomException;
 import com.canwia.BankExchange.model.Account;
 import com.canwia.BankExchange.model.Currency;
 import com.canwia.BankExchange.model.Exchange;
 import com.canwia.BankExchange.model.Operation;
 import com.canwia.BankExchange.repository.ExchangeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -16,10 +19,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 
+@Slf4j
 @Service
 public class ExchangeService {
 
@@ -112,7 +117,7 @@ public class ExchangeService {
     public void finalizeExchange(BuyExchangeRequest buyExchangeRequest) {
         Optional<Account> pln_AccountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getPlnAccount_id()));
         Optional<Account> other_AccountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getOtherAccount_id()));
-        Exchange exchange = new Exchange();
+        BigDecimal currencyRate = BigDecimal.valueOf(currencyService.findCurrencyById(buyExchangeRequest.getCurrency_code()).getBuy());
 
         pln_AccountOptional.ifPresentOrElse(account -> {
                     System.out.println("From Account: " + account.getId()+ " new account balance: " + account.getBalance());
@@ -125,29 +130,32 @@ public class ExchangeService {
                 ()-> System.out.println("Account not found!")
         );
 
-        //TODO exchange model
-        exchange.setSourceAccount(pln_AccountOptional.get());
-        exchange.setTargetAccount(other_AccountOptional.get());
-        exchange.setOperation(Operation.BUY);
-        exchange.setExchangeRate(null); //TODO getCurrencyRate()
-        exchange.setPlnAmount(calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code()));
-        exchange.setOtherCurrencyAmount(buyExchangeRequest.getAmount());
-        exchange.setTransactionFee(BigDecimal.ZERO);
-        exchange.setExchangeDate(LocalDateTime.now());
-        exchange.setStatus("SUCCESS");
-        exchange.setErrorMessage(null);
 
-        exchangeRepository.save(exchange);
+            Exchange exchange = new Exchange();
+            exchange.setAccount(other_AccountOptional.get());
+            exchange.setPlnAccountId(pln_AccountOptional.get().getId()); //TODO ***
+            exchange.setOperation(Operation.BUY);
+            exchange.setExchangeRate(currencyRate);
+            exchange.setPlnAmount(calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code()));
+            exchange.setOtherCurrencyAmount(buyExchangeRequest.getAmount());
+            exchange.setPlnCurrency("PLN");
+            exchange.setOtherCurrency(buyExchangeRequest.getCurrency_code());
+            exchange.setTransactionFee(BigDecimal.ZERO);
+            exchange.setExchangeDate(LocalDateTime.now());
+            exchangeRepository.save(exchange);
 
-        //1as
     }
 
 
 
 
+    public List<ExchangeDto> getAllExchangeByAccountId(String id) {
+        return exchangeDtoConverter.convertFrom(exchangeRepository.findAllByAccountId(UUID.fromString(id)));
+    }
 
-
-
+    public ExchangeDto getExchangeById(String id) {
+        return exchangeDtoConverter.convertFrom(exchangeRepository.findById(UUID.fromString(id)).orElseThrow(() -> new CustomException("Exchange not found! @@ExchangeService:v35")));
+    }
 
 
 
@@ -172,4 +180,7 @@ public class ExchangeService {
         BigDecimal newBalance = account.getBalance().add(amount);
         accountService.updateAccount(account,newBalance);
     }
+
+
+
 }
