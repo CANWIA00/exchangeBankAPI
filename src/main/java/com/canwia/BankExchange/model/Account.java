@@ -21,7 +21,9 @@ public class Account {
     private UUID id;
 
     // User ID representing the owner of the account (could be a foreign key to a User entity)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // Currency the account is in (e.g., PLN, USD, EUR, etc.)
     private String currency;
@@ -39,9 +41,6 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Exchange> exchanges;
 
-    @Override
-    public String toString() {
-        return "Account [id=" + id + ", userId=" + userId + ", currency=" + currency + ", currencyCode=" + currencyCode + ", balance=" + balance + ", createdAt=" + createdAt + "]";
-    }
+
 
 }

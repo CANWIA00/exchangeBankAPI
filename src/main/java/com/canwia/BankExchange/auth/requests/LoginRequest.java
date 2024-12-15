@@ -1,4 +1,4 @@
-package com.canwia.BankExchange.auth;
+package com.canwia.BankExchange.auth.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

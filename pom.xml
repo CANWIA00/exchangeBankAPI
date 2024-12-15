@@ -60,12 +60,6 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 
-		<!-- Optional: Spring Boot Starter Actuator (for monitoring) -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-
 		<!-- RabbitMQ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,7 +71,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>3.3.3</version>
 		</dependency>
 		<!-- JWT -->
 		<dependency>

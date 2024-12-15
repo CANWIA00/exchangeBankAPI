@@ -6,10 +6,7 @@ import com.canwia.BankExchange.dto.converter.ExchangeDtoConverter;
 import com.canwia.BankExchange.dto.requests.BuyExchangeRequest;
 
 import com.canwia.BankExchange.exception.CustomException;
-import com.canwia.BankExchange.model.Account;
-import com.canwia.BankExchange.model.Currency;
-import com.canwia.BankExchange.model.Exchange;
-import com.canwia.BankExchange.model.Operation;
+import com.canwia.BankExchange.model.*;
 import com.canwia.BankExchange.repository.ExchangeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -70,7 +67,6 @@ public class ExchangeService {
         Optional<Account> accountOptional = accountService.findAccountById(UUID.fromString(buyExchangeRequest.getPlnAccount_id()));
         Optional<Currency> currency = Optional.ofNullable(currencyService.findCurrencyById(buyExchangeRequest.getCurrency_code()));
         BigDecimal neededAmount = calculateNeededAmountForExchangeBuy(buyExchangeRequest.getAmount(), buyExchangeRequest.getCurrency_code());
-
 
         if (accountOptional.isPresent() && currency.isPresent()) {
             if(ifEnoughAmount(neededAmount,accountOptional.get().getBalance())){

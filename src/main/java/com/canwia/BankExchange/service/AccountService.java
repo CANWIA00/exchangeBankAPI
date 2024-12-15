@@ -1,11 +1,13 @@
 package com.canwia.BankExchange.service;
 
+import com.canwia.BankExchange.auth.AuthUtil;
 import com.canwia.BankExchange.dto.AccountDto;
 import com.canwia.BankExchange.dto.converter.AccountDtoConverter;
 import com.canwia.BankExchange.dto.requests.CreateAccountRequest;
 import com.canwia.BankExchange.exception.CustomException;
 import com.canwia.BankExchange.model.Account;
 import com.canwia.BankExchange.model.Currency;
+import com.canwia.BankExchange.model.User;
 import com.canwia.BankExchange.repository.AccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,19 +26,22 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountDtoConverter accountDtoConverter;
     private final CurrencyService currencyService;
+    private final UserService userService;
 
-    public AccountService(AccountRepository accountRepository, AccountDtoConverter accountDtoConverter, CurrencyService currencyService) {
+    public AccountService(AccountRepository accountRepository, AccountDtoConverter accountDtoConverter, CurrencyService currencyService, UserService userService) {
         this.accountRepository = accountRepository;
         this.accountDtoConverter = accountDtoConverter;
         this.currencyService = currencyService;
+        this.userService = userService;
     }
 
     public AccountDto createAccount(CreateAccountRequest createAccountRequest) {
 
+        User user = userService.getUserByToken(AuthUtil.handleRequest());
         Currency currency = currencyService.findCurrencyById(createAccountRequest.getCurrencyCode());
         //TODO bind the userId
         Account account = new Account();
-        account.setUserId(UUID.randomUUID());
+        account.setUser(user);
         account.setBalance(BigDecimal.valueOf(0));
         account.setCurrency(currency.getName());
         account.setCurrencyCode(currency.getCode());
@@ -53,8 +58,10 @@ public class AccountService {
     }
 
 
-    public List<AccountDto> getAllAccount(String userId) {
-        List<Account> accountList = accountRepository.findAllByUserId(fromString(userId));
+    public List<AccountDto> getAllAccount() {
+        User user = userService.getUserByToken(AuthUtil.handleRequest());
+
+        List<Account> accountList = accountRepository.findAllByUserId(user.getId());
         if(accountList.isEmpty()){
             throw new CustomException("Account not found Exception:[AccountService]:A_2");
         }
@@ -64,8 +71,10 @@ public class AccountService {
 
     public String deleteAccountById(String id) {
         Optional<Account> account = findAccountById(fromString(id));
+        User user = userService.getUserByToken(AuthUtil.handleRequest());
 
-        if(account.isPresent()){
+
+        if(account.isPresent() &&account.get().getUser().getId().equals(user.getId())){
             accountRepository.deleteById(UUID.fromString(id));
             return "Account deleted successfully";
         }else{

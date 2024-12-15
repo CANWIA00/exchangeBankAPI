@@ -1,4 +1,4 @@
-package com.canwia.BankExchange.auth;
+package com.canwia.BankExchange.auth.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +15,6 @@ public class RegisterRequest {
     private String surname;
     private String email;
     private String password;
-    private String phoneNumber;
-    private String address;
 
     //TODO if you wanna add more entity for register request
 }

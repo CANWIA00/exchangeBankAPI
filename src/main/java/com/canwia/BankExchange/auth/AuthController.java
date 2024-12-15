@@ -1,5 +1,7 @@
 package com.canwia.BankExchange.auth;
 
+import com.canwia.BankExchange.auth.requests.LoginRequest;
+import com.canwia.BankExchange.auth.requests.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+
     private final AuthService authService;
 
     @PostMapping("/register")
@@ -23,4 +26,5 @@ public class AuthController {
     public  ResponseEntity<Token> authentication(@RequestBody LoginRequest loginRequest){
         return ResponseEntity.ok(authService.login(loginRequest));
     }
+
 }

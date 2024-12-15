@@ -21,23 +21,23 @@ public class AccountController {
 
 
     //****** TODO Valid userId
-    @GetMapping("/user/{id}")
-    ResponseEntity<List<AccountDto>> getAllAccountByUserId(@PathVariable String id) {
-        return ResponseEntity.ok(accountService.getAllAccount(id));
+    @GetMapping("/user")
+    public ResponseEntity<List<AccountDto>> getAllAccountByUserId() {
+        return ResponseEntity.ok(accountService.getAllAccount());
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<AccountDto> getAccount(@PathVariable String id){
+    public ResponseEntity<AccountDto> getAccount(@PathVariable String id){
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
     @PostMapping
-    ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest createAccountRequest){
+    public ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest createAccountRequest){
         return ResponseEntity.ok(accountService.createAccount(createAccountRequest));
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteAccount(@PathVariable String id){
+    public ResponseEntity<String> deleteAccount(@PathVariable String id){
         return ResponseEntity.ok(accountService.deleteAccountById(id));
     }
 
