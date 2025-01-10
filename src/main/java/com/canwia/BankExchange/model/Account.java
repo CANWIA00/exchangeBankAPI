@@ -21,8 +21,8 @@ public class Account {
     private UUID id;
 
     // User ID representing the owner of the account (could be a foreign key to a User entity)
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     // Currency the account is in (e.g., PLN, USD, EUR, etc.)
@@ -38,9 +38,20 @@ public class Account {
     private LocalDateTime createdAt;
 
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Exchange> exchanges;
 
 
-
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", user=" + user.getId() +
+                ", currency='" + currency + '\'' +
+                ", currencyCode='" + currencyCode + '\'' +
+                ", balance=" + balance +
+                ", createdAt=" + createdAt +
+                ", exchanges=" + exchanges +
+                '}';
+    }
 }

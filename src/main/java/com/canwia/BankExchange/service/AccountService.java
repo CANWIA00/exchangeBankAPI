@@ -39,7 +39,6 @@ public class AccountService {
 
         User user = userService.getUserByToken(AuthUtil.handleRequest());
         Currency currency = currencyService.findCurrencyById(createAccountRequest.getCurrencyCode());
-        //TODO bind the userId
         Account account = new Account();
         account.setUser(user);
         account.setBalance(BigDecimal.valueOf(0));
@@ -49,6 +48,17 @@ public class AccountService {
 
         accountRepository.save(account);
 
+        return accountDtoConverter.convertFrom(account);
+    }
+
+    public AccountDto createPlnAccount() {
+        User user = userService.getUserByToken(AuthUtil.handleRequest());
+        Account account = new Account();
+        account.setUser(user);
+        account.setBalance(BigDecimal.valueOf(0));
+        account.setCreatedAt(LocalDateTime.now());
+        account.setCurrency("Zloty");
+        account.setCurrencyCode("PLN");
         return accountDtoConverter.convertFrom(account);
     }
 
@@ -95,5 +105,6 @@ public class AccountService {
         account.setBalance(newBalance);
         accountRepository.save(account);
     }
+
 
 }

@@ -37,7 +37,7 @@ public class User implements UserDetails {
 
     private LocalDate creationDate = LocalDate.now();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Account> account;
 
     @Enumerated(EnumType.STRING)
@@ -78,4 +78,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

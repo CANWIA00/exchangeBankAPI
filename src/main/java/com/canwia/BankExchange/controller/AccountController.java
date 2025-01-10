@@ -20,7 +20,6 @@ public class AccountController {
     }
 
 
-    //****** TODO Valid userId
     @GetMapping("/user")
     public ResponseEntity<List<AccountDto>> getAllAccountByUserId() {
         return ResponseEntity.ok(accountService.getAllAccount());
@@ -31,9 +30,16 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
+
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest createAccountRequest){
         return ResponseEntity.ok(accountService.createAccount(createAccountRequest));
+    }
+
+    //ToCreate initial PLN account
+    @PostMapping("/pln")
+    public ResponseEntity<AccountDto> createPlnAccount(){
+        return ResponseEntity.ok(accountService.createPlnAccount());
     }
 
     @DeleteMapping("/{id}")

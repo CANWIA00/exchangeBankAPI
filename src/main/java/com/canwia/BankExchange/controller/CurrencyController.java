@@ -26,7 +26,7 @@ public class CurrencyController {
         this.currencyService = currencyService;
     }
 
-    //TODO make it just for c table
+
     @GetMapping("/currency/table")
     public ResponseEntity<List<CurrencyDto>> getAllCurrencyByTableId() {
         return ResponseEntity.ok(currencyService.getAllCurrencyByTable());
@@ -39,7 +39,7 @@ public class CurrencyController {
     }
 
     @GetMapping("/currency/table/period/{id}")
-    public ResponseEntity<List<CurrencyData>> getCurrencyPeriodById(@PathVariable String id) {
+    public ResponseEntity<CurrencyData> getCurrencyPeriodById(@PathVariable String id) {
         return ResponseEntity.ok(currencyService.getCurrencyPeriodById(id));
     }
 

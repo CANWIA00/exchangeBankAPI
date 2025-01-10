@@ -5,9 +5,11 @@ import com.canwia.BankExchange.dto.ExchangeDto;
 import com.canwia.BankExchange.dto.converter.ExchangeDtoConverter;
 import com.canwia.BankExchange.dto.requests.BuyExchangeRequest;
 
+import com.canwia.BankExchange.dto.requests.SellExchangeRequest;
 import com.canwia.BankExchange.exception.CustomException;
 import com.canwia.BankExchange.model.*;
 import com.canwia.BankExchange.repository.ExchangeRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.DirectExchange;
@@ -54,6 +56,11 @@ public class ExchangeService {
     //Directly, send to the rabbitMQ our request and our first step gonna read our message then all the process gonna start.
     public void createExchange(BuyExchangeRequest buyExchangeRequest) {
         rabbitTemplate.convertAndSend(directExchange.getName(), routingKey, buyExchangeRequest);
+    }
+
+
+    public void sellExchange(SellExchangeRequest sellExchangeRequest) {
+        rabbitTemplate.convertAndSend(directExchange);
     }
 
     //*** First-Step ***

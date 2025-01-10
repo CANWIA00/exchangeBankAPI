@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: bankdb
+      MYSQL_USER: canwia
+      MYSQL_PASSWORD: UNDERground35
+    ports:
+      - "3307:3306"  # Host port changed to 3307 to avoid conflict
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq:management
+    restart: always
+    ports:
+      - "5673:5672"  # Changed external port for AMQP to 5673
+      - "15673:15672"  # Changed external port for RabbitMQ management UI to 15673
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  bankexchange:
+    image: canwia/bankexchange:latest  # Use the pre-built image directly
+    restart: always
+    ports:
+      - "8080:8080"  # BankExchange service port
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bankdb
+      SPRING_DATASOURCE_USERNAME: canwia
+      SPRING_DATASOURCE_PASSWORD: UNDERground35
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672  # Keep using the internal port (5672) inside Docker network
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - mysql
+      - rabbitmq
+
+volumes:
+  mysql_data:

@@ -39,17 +39,17 @@ public class CurrencyService {
         return currencyDtoConverter.convertFrom(findCurrencyById(id));
     }
 
-    public List<CurrencyData> getCurrencyPeriodById(String id) {
+    public CurrencyData getCurrencyPeriodById(String id) {
         return getCurrencyPeriodTable(id);
     }
 
 
 
-    protected List<CurrencyData> getCurrencyPeriodTable(String id) {
-        String url = URL_TABLE_C + id + "/last/10";
+    protected CurrencyData getCurrencyPeriodTable(String id) {
+        String url = URL_TABLE_C + id + "/last/30";
         CurrencyData currency = restTemplate.getForObject(url, CurrencyData.class);
 
-        return Collections.singletonList(currency);
+        return currency;
     }
 
 
