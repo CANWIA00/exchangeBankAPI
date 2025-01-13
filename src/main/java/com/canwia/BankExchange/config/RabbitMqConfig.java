@@ -45,6 +45,20 @@ public class RabbitMqConfig {
         return new Queue("thirdStepQueue", true);
     }
 
+    @Bean
+    public Queue fourthStepQueue() {
+        return new Queue("fourthStepQueue", true);
+    }
+
+    @Bean
+    public Queue fifthStepQueue() {
+        return new Queue("fifthStepQueue", true);
+    }
+
+    @Bean Queue sixthStepQueue() {
+        return new Queue("sixthStepQueue", true);
+    }
+
 
     @Bean
     Binding firstStepBinding(Queue firstStepQueue, DirectExchange directExchange) {
@@ -60,6 +74,25 @@ public class RabbitMqConfig {
     Binding thirdStepBinding(Queue thirdStepQueue, DirectExchange directExchange) {
         return BindingBuilder.bind(thirdStepQueue).to(directExchange).with("thirdRoute");
     }
+
+    @Bean
+    Binding fourthStepBinding(Queue fourthStepQueue, DirectExchange directExchange) {
+        return BindingBuilder.bind(fourthStepQueue).to(directExchange).with("fourthRoute");
+    }
+
+    @Bean
+    Binding fifthStepBinding(Queue fifthStepQueue, DirectExchange directExchange) {
+        return BindingBuilder.bind(fifthStepQueue).to(directExchange).with("fifthRoute");
+    }
+
+    @Bean
+    Binding sixthStepBinding(Queue sixthStepQueue, DirectExchange directExchange) {
+        return BindingBuilder.bind(sixthStepQueue).to(directExchange).with("sixthRoute");
+    }
+
+
+
+
 
 
     @Bean

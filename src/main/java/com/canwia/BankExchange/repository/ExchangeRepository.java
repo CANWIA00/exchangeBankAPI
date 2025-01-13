@@ -10,5 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface ExchangeRepository extends JpaRepository<Exchange,UUID> {
+
     List<Exchange> findAllByAccountId(UUID accountId);
 }

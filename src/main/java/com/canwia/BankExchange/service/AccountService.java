@@ -59,7 +59,7 @@ public class AccountService {
         account.setCreatedAt(LocalDateTime.now());
         account.setCurrency("Zloty");
         account.setCurrencyCode("PLN");
-        return accountDtoConverter.convertFrom(account);
+        return accountDtoConverter.convertFrom(accountRepository.save(account));
     }
 
     public AccountDto getAccountById(String id) {
@@ -94,10 +94,15 @@ public class AccountService {
 
     }
 
+    public AccountDto addMoneyAccount(String id) {
+        Account account = accountRepository.findById(fromString(id)).orElseThrow(() -> new CustomException("Account not found Exception:[AccountService]:A_1"));
+        account.setBalance(account.getBalance().add(BigDecimal.valueOf(1000)));
+        return accountDtoConverter.convertFrom(accountRepository.save(account));
+    }
+
     /************* util methods ****************/
     protected Optional<Account> findAccountById(UUID accountId) {
-        Optional<Account> account = accountRepository.findById(accountId);
-        return account;
+        return accountRepository.findById(accountId);
     }
 
 
@@ -105,6 +110,17 @@ public class AccountService {
         account.setBalance(newBalance);
         accountRepository.save(account);
     }
+
+    protected List<Account> getAllAccountByUser(){
+        User user = userService.getUserByToken(AuthUtil.handleRequest());
+
+        List<Account> accountList = accountRepository.findAllByUserId(user.getId());
+        if(accountList.isEmpty()){
+            throw new CustomException("Account not found Exception:[AccountService]:A_2");
+        }
+        return accountList;
+    }
+
 
 
 }

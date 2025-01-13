@@ -2,6 +2,7 @@ package com.canwia.BankExchange.service;
 
 import com.canwia.BankExchange.dto.CurrencyDto;
 import com.canwia.BankExchange.dto.converter.CurrencyDtoConverter;
+import com.canwia.BankExchange.exception.CustomException;
 import com.canwia.BankExchange.model.Currency;
 import com.canwia.BankExchange.util.CurrencyData;
 import com.canwia.BankExchange.util.TableData;
@@ -72,7 +73,7 @@ public class CurrencyService {
             return currency;
 
         }else {
-            return null; //TODO error handling
+            throw new CustomException("Currency not found exception!!!");
         }
 
 

@@ -30,6 +30,11 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<AccountDto> addMoneyAccount(@PathVariable String id){
+        return ResponseEntity.ok(accountService.addMoneyAccount(id));
+    }
+
 
     @PostMapping
     public ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest createAccountRequest){

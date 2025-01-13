@@ -16,8 +16,8 @@ public class ExchangeDtoConverter {
 
         ExchangeDto exchangeDto = new ExchangeDto();
         exchangeDto.setId(String.valueOf(exchange.getId()));
-        exchangeDto.setPln_account_id(String.valueOf(exchange.getPlnAccountId()));
         exchangeDto.setOther_account_id(String.valueOf(exchange.getAccount().getId()));
+        exchangeDto.setPln_account_id(exchange.getPlnAccountId().toString());
         exchangeDto.setPlnAmount((exchange.getPlnAmount().floatValue()));
         exchangeDto.setOtherAmount(exchange.getOtherCurrencyAmount().floatValue());
         exchangeDto.setPlnCurrency(exchange.getPlnCurrency());

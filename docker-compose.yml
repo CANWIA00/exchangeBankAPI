@@ -25,7 +25,7 @@ services:
       RABBITMQ_DEFAULT_PASS: guest
 
   bankexchange:
-    image: canwia/bankexchange:latest  # Use the pre-built image directly
+    image: canwia/bankexchange:v2  # Use the pre-built image directly
     restart: always
     ports:
       - "8080:8080"  # BankExchange service port
