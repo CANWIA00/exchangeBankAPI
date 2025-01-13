@@ -43,7 +43,7 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-<h5 align="left"> Data Objects:</h5>
+<h4 align="left"> Database Object Diagram:</h4>
 
 ###
 
@@ -51,19 +51,23 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-<h5 align="left">Business Logic Schema: </h5>
+<h4 align="left">Business Logic: </h4>
 
 ###
 
-![Business Logic Schema](https://github.com/CANWIA00)
+<h5 align="left">Class Diagram: </h5>
 
 ###
 
-<h5 align="left"> Exchange Service / RabbitMQ Scenario:</h5>
+![Exchange Operation Class Diagram](https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/class.png)
+
+###
+
+<h5 align="left"> Class Diagram / RabbitMQ Process Logic:</h5>
 
 ###
 
 
-![Exchange Service](https://github.com/CANWIA00)
+![RabbitMQ Queue Logic](https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/class2.png)
 
 
