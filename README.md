@@ -47,7 +47,7 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-![Database Schema]([/DB.png))
+![Database Schema](https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/DB.png)
 
 ###
 
