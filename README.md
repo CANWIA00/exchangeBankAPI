@@ -35,13 +35,12 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 ###
 
 <h2>Endpoints</h2>
-
+<h6>Currency</h6>
+<p>You need to take a look NBP api for currency ids. All the currencies are provided using by Bank Polski Api: https://api.nbp.pl/ </p>
 <ul>
   <li>http://localhost:8080/v1/currency/table</li>
-   <li>http://localhost:8080/v1/currency/id/usd</li>
-   <li>http://localhost:8080/v1/currency/table/period/usd</li>
-   <li></li>
-   <li></li>
+   <li>http://localhost:8080/v1/currency/id/{id}</li>
+   <li>http://localhost:8080/v1/currency/table/period/{id}</li>
 </ul>  
 
 ###
