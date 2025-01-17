@@ -52,7 +52,7 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-<h2 align="center"> Dedvelopment </h3>
+<h1 align="center"> Dedvelopment </h1>
 
 ###
 
