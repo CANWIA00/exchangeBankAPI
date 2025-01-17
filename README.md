@@ -35,19 +35,17 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 ###
 
 
-# Clone the Exchange Bank API repository
-git clone https://github.com/CANWIA00/exchangeBankAPI.git
+### Clone the Exchange Bank API repository
+- git clone https://github.com/CANWIA00/exchangeBankAPI.git
 
-# Navigate into the project directory
-cd exchangeBankAPI
+### Navigate into the project directory
+- cd exchangeBankAPI
 
+### Run the file using Docker
+- docker-compose up --build
 
-
-## API Documentation
-
-View the full API documentation [here](http://localhost:8080/swagger-ui/index.html#/).
-
-[http://localhost:8080/swagger-ui/index.html#/]http://localhost:8080/swagger-ui/index.html#/
+### Swagger and full documentation
+- http://localhost:8080/swagger-ui/index.html#/
 
 
 
