@@ -47,7 +47,9 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 ### Swagger and full documentation
 - http://localhost:8080/swagger-ui/index.html#/
 
-
+### Endpoints
+- Base url: http://localhost:8080/v1/
+- All the endponints got secured with jwt token except Login and Register endpoints. So need to send also jwt token all the time via header.
 
 
 ###
