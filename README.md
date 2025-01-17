@@ -51,6 +51,8 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 - Base url: http://localhost:8080/v1/
 - All the endponints got secured with jwt token except Login and Register endpoints. So need to send also jwt token all the time via header.
 
+|                  Exchange                           |
+|-----------------------------------------------------|
 
 | Rquest Type | Path     | Description                |
 | :-------- | :------- | :------------------------- |
