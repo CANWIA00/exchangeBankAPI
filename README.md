@@ -52,6 +52,14 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 - All the endponints got secured with jwt token except Login and Register endpoints. So need to send also jwt token all the time via header.
 
 
+| Key | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `count` | `string` | The length of the response |
+| `pages` | `string` | The amount of pages|
+| `next` | `string` | Link to the next page (if it exists)|
+| `prev` | `string` | Link to the previous page (if it exists)|
+
+
 ###
 
 <h1 align="left"> Dedvelopment </h1>
