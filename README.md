@@ -88,14 +88,19 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 | `GET` | `/exchange/account/{id}` | Get all exchange details using by account id [History]|
 
 #### Currency Controller
-<h6>All currency rates are up to date // https://api.nbp.pl/</h6>
+
+<h6>All currency rates are up to date. // https://api.nbp.pl/</h6>
+
 | Request Type | Path     | Description                |
 | :-------- | :------- | :------------------------- |
 | `GET` | `/currency/table` | Get all currency rates|
 | `GET` | `/currency/table/period/{id}` | Get currency rates for 1 month |
 | `GET` | `/currency/id/{id}` | Get currency using by id|
 
+###
 
+<h4>Launch the API on your device and navigate to the Swagger documentation endpoint to explore the available requests and responses.</h4>
+- http://localhost:8080/swagger-ui/index.html#/
 
 
 ###
