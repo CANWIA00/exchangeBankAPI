@@ -32,10 +32,17 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 - Currency Rates API: Narodowy Bank Polski API (NBP API)
 - Deployment: Docker for containerization and environment management
 
+###
 
+<h2>Endpoints</h2>
 
-
-  
+<ul>
+  <li>http://localhost:8080/v1/currency/table</li>
+   <li>http://localhost:8080/v1/currency/id/usd</li>
+   <li>http://localhost:8080/v1/currency/table/period/usd</li>
+   <li></li>
+   <li></li>
+</ul>  
 
 ###
 
