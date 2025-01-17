@@ -32,6 +32,23 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 - Currency Rates API: Narodowy Bank Polski API (NBP API)
 - Deployment: Docker for containerization and environment management
 
+### Screan Shoots
+
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/login.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/register.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/home1.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/home2.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/create.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/create2.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/create3.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/account detail.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/buy.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/sell.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/exchange detail.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/history1.png" width="23%"></img> 
+<img src="https://raw.githubusercontent.com/CANWIA00/exchangeBankAPI/master/images/history2.png" width="23%"></img> 
+
+
 ###
 
 
