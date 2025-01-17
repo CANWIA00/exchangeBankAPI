@@ -64,11 +64,11 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-<h4 align="center">Business Logic: </h4>
+<h3 align="center">Business Logic </h3>
 
 ###
 
-<h5 align="center">Class Diagram: </h5>
+<h4 align="center">Class Diagram: </h4>
 
 ###
 
@@ -76,7 +76,7 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ###
 
-<h5 align="center"> Class Diagram / RabbitMQ Process Logic:</h5>
+<h4 align="center"> Class Diagram / RabbitMQ Process Logic:</h4>
 
 ###
 
