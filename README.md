@@ -34,7 +34,7 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 
 ### Screan Shoots
 
-Mobile Application is developed bu Huseyingundogdu. You can look from that link:
+Mobile Application (Swiftui) is developed bu Huseyingundogdu. You can look from that link:
 
 https://github.com/huseyingundogdu/ExchangeApplication
 
