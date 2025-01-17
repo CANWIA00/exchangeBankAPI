@@ -100,12 +100,13 @@ The Exchange Banking API is a feature-rich and real-time currency exchange platf
 ###
 
 <h4>Launch the API on your device and navigate to the Swagger documentation endpoint to explore the available requests and responses.</h4>
-- http://localhost:8080/swagger-ui/index.html#/
+
+ http://localhost:8080/swagger-ui/index.html#/
 
 
 ###
 
-<h1 align="left"> Dedvelopment </h1>
+<h1 align="left"> Development </h1>
 
 ###
 
